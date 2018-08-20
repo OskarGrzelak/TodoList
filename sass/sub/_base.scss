@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    box-sizing: border-box;
+    background-image: linear-gradient(to right, #fc4a1a, #f7b733);
+}
+
+.container {
+    background-color: $color-white;
+    max-width: 120rem;
+    height: 80vh;
+    margin: 10vh auto;
+    border-radius: 6px;
+    position: relative;
+}
