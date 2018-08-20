@@ -7,6 +7,56 @@
     <title>Todo List</title>
 </head>
 <body>
+
+    <div class="container">
+        <header class="header">
+            <div class="header__logo"></div>
+            <div class="header__message">
+                <h2 class="heading-secondary">Hi there! Let's see, what you have to do</h2>
+            </div>
+        </header>
+
+        <aside class="menu">
+            <div class="menu__header">
+                <h3 class="heading-tertiary">Your lists</h3>
+            </div>
+            <ul class="menu__list">
+                <li class="menu__item">Today</li>
+                <li class="menu__item">This week</li>
+                <li class="menu__item">This month</li>
+                <li class="menu__item">Important</li>
+                <li class="menu__item">All</li>
+                <li class="menu__item">Archived</li>
+            </ul>
+        </aside>
+
+        <main class="todo">
+            <div class="todo__header">
+                <h1 class="heading-primary">Tasks for today (<span id="today-date">20th August</span>) <span id="add-task">&plus;</span></h1>
+            </div>
+            <div class="todo__task-adder">
+                <form class="todo__form">
+                    <input type="text" class="todo__input" placeholder="Your task is...">
+                    <input type="date" class="todo__input">
+                    <button class="btn">Add task</button>
+                </form>
+            </div>
+            <div class="todo__tasks">
+                <ul class="todo__list">
+                    <li class="todo__task">Napisać artykuł dla Patryka</li>
+                    <li class="todo__task">Zaprojektować stronę internetową</li>
+                    <li class="todo__task">Zrobić zakupy spożywcze</li>
+                    <li class="todo__task">Umyć naczynia</li>
+                    <li class="todo__task">Skończyć Mad Maxa</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p class="footer__copyright">Simple todo list made by Oskar Grzelak as an web developing exercise.</p>
+            <p class="footer__copyright">Copyright by &copy; Oskar Grzelak, 2018</p>
+        </footer>
+    </div>
     
 </body>
 </html>
