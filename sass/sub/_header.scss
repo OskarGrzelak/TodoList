@@ -1,6 +1,23 @@
 .header {
-    height: 8rem;
     padding: 2rem;
+    width: 100%;
 
-    border: 1px solid orange;
+    &__logo {
+        display: inline-block;
+        margin-right: 4rem;
+
+        & img {
+            height: 6rem;
+        }
+    }
+
+    &__message {
+        display: inline-block;
+
+        &:not(:last-child) {
+            padding-right: 3rem;
+            margin-right: 4rem;
+            border-right: 2px solid rgba($color-primary, .3);
+        }
+    }
 }

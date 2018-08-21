@@ -1,3 +1,23 @@
+body {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: #313131; }
+
+.heading-secondary {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 2.5rem;
+  letter-spacing: .2rem;
+  line-height: 1.2;
+  color: #fc4a1a; }
+
+.heading-tertiary {
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 1.8rem;
+  letter-spacing: .1rem; }
+
 * {
   margin: 0;
   padding: 0;
@@ -19,31 +39,37 @@ body {
   position: relative; }
 
 .header {
-  height: 8rem;
   padding: 2rem;
-  border: 1px solid orange; }
+  width: 100%; }
+  .header__logo {
+    display: inline-block;
+    margin-right: 4rem; }
+    .header__logo img {
+      height: 6rem; }
+  .header__message {
+    display: inline-block; }
+    .header__message:not(:last-child) {
+      padding-right: 3rem;
+      margin-right: 4rem;
+      border-right: 2px solid rgba(252, 74, 26, 0.3); }
 
 .menu {
   float: left;
   display: block;
   height: calc(80vh - 14rem);
   width: 20%;
-  padding: 2rem;
-  border: 1px solid red; }
+  padding: 2rem; }
 
 .todo {
   float: left;
   display: block;
   height: calc(80vh - 14rem);
   width: 80%;
-  padding: 2rem;
-  border: 1px solid green; }
+  padding: 2rem; }
 
 .footer {
   position: absolute;
   bottom: 0;
   right: 0;
-  height: 6rem;
   width: 100%;
-  padding: 2rem;
-  border: 1px solid purple; }
+  padding: 2rem; }
