@@ -56,9 +56,28 @@ body {
 .menu {
   float: left;
   display: block;
-  height: calc(80vh - 14rem);
   width: 20%;
   padding: 2rem; }
+  .menu__header {
+    margin-bottom: 2rem; }
+  .menu__list {
+    list-style: none; }
+  .menu__item {
+    cursor: default;
+    border-bottom: 1px solid transparent;
+    width: 85%;
+    padding-left: .5rem;
+    transition: all .2s; }
+    .menu__item:not(:last-child) {
+      margin-bottom: .5rem; }
+    .menu__item:hover {
+      color: #fc4a1a;
+      border-bottom: 1px solid #fc4a1a; }
+    .menu__item--active {
+      background-color: #fc4a1a;
+      color: #ffffff !important;
+      width: 100%;
+      clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%); }
 
 .todo {
   float: left;
