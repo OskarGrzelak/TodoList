@@ -40,26 +40,41 @@
 
         <main class="todo">
             <div class="todo__header">
-                <h1 class="heading-primary">Tasks for today (<span id="today-date">20th August</span>) <span id="add-task">&plus;</span></h1>
+                <h1 class="heading-primary">Tasks for today (<span id="today-date">20th August</span>) <div class="add-btn__btn"><span class="add-btn__sign" id="add-task">&plus;</span></div></h1>
             </div>
-            <div class="todo__task-adder">
-                <form class="todo__form">
-                    <input type="text" class="todo__input" placeholder="Your task is...">
-                    <input type="date" class="todo__input">
-                    <button class="btn">Add task</button>
+            <div class="todo__add-task">
+                <form class="form">
+                    <div class="form__group">
+                        <label for="task-name" class="form__label">New task:</label>
+                        <input type="text" class="form__input" id="task-name">
+                    </div>
+                    <div class="form__group">
+                        <label for="task-date" class="form__label">Due date:</label>
+                        <input type="date" class="form__input" id="task-date">
+                        <label for="task-important" class="form__label">Important?<span class="checkbox checkbox--form"><span class="check">&check;</span></span></label>
+                        <input type="checkbox" name="Important" class="form__check-input" id="task-important">
+                    </div>
+                    <div class="form__group">
+                        <button class="form-btn">Add task</button>
+                    </div>
                 </form>
             </div>
             <div class="todo__tasks">
                 <ul class="todo__list">
-                    <li class="todo__task">Napisać artykuł dla Patryka</li>
-                    <li class="todo__task">Zaprojektować stronę internetową</li>
-                    <li class="todo__task">Zrobić zakupy spożywcze</li>
-                    <li class="todo__task">Umyć naczynia</li>
-                    <li class="todo__task">Skończyć Mad Maxa</li>
+                    <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Napisać artykuł dla Patryka</li>
+                    <li class="todo__task"><span class="checkbox"></span>Zaprojektować stronę internetową</li>
+                    <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zrobić zakupy spożywcze</li>
+                    <!-- <li class="todo__task"><span class="checkbox"></span>Umyć naczynia</li>
+                    <li class="todo__task"><span class="checkbox"></span>Skończyć Mad Maxa</li>
+                    <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Napisać artykuł dla Patryka</li>
+                    <li class="todo__task"><span class="checkbox"></span>Zaprojektować stronę internetową</li>
+                    <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zrobić zakupy spożywcze</li>
+                    <li class="todo__task"><span class="checkbox"></span>Umyć naczynia</li>
+                    <li class="todo__task"><span class="checkbox"></span>Skończyć Mad Maxa</li> -->
                 </ul>
             </div>
         </main>
-
+    
         <footer class="footer">
             <p class="footer__copyright">Simple todo list made by Oskar Grzelak as a web development exercise.</p>
             <p class="footer__copyright">Copyright by &copy; Oskar Grzelak, 2018</p>

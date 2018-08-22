@@ -1,0 +1,65 @@
+.add-btn {
+    
+    &__btn {
+        display: inline-block;
+        height: 3.5rem;
+        width: 3.5rem;
+        border: 1px solid $color-grey-dark;
+        transform: translateY(6px);
+        margin-left: 2rem;
+        cursor: default;
+        position: relative;
+        transition: all .2s;
+
+        &:hover {
+            border: 1px solid $color-primary;
+
+            & .add-btn__sign {
+                color: $color-primary;
+            }
+        }
+    }
+
+    &__sign {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-45%, -50%);
+        transition: all .2s;
+    }
+}
+
+.form-btn {
+    background-color: $color-white;
+    border: none;
+    text-transform: uppercase;
+    font-family: inherit;
+    color: inherit;
+    font-size: 1.8rem;
+    box-shadow: 0px 2px 5px 0px rgba($color-primary, .6);
+    padding: .2rem 1rem;
+}
+
+.checkbox {
+    display: inline-block;
+    height: 1.6rem;
+    width: 1.6rem;
+    border: 1px solid $color-grey-dark;
+    margin-right: 1.5rem;
+    transform: translateY(1px);
+    position: relative;
+
+    &--form {
+        margin-left: 1rem;
+        border: none;
+        box-shadow: 0px 2px 5px 0px rgba($color-primary, .6);
+    }
+}
+
+.check {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -65%);
+    font-size: 3rem;
+}

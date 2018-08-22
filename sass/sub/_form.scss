@@ -1,0 +1,40 @@
+.form {
+
+    &__group {
+
+        &:not(:last-child) {
+            margin-bottom: 1.5rem;
+        }
+
+        &:nth-child(2) .form__input:first-of-type {
+            margin-right: 2rem;
+        }
+    }
+
+    &__label {
+        display: inline-block;
+        text-transform: uppercase;
+        margin-right: 1rem;
+    }
+
+    &__input {
+        font-size: 1.8rem;
+        font-family: inherit;
+        color: inherit;
+        border-radius: 2px;
+        border: none;
+        box-shadow: 0px 2px 5px 0px rgba($color-primary, .6);
+
+        &:focus {
+            outline: none;
+        }
+
+        &[type="text"] {
+            width: 50%;
+        }
+    }
+
+    &__check-input {
+        display: none;
+    }
+}

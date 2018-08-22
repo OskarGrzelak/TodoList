@@ -1,12 +1,15 @@
 body {
     font-family: 'Nunito', sans-serif;
     font-weight: 400;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     color: $color-grey-dark;
 }
 
 .heading-primary {
-
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 3rem;
+    letter-spacing: .3rem;
 }
 
 .heading-secondary {

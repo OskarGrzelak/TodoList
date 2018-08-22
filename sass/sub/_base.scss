@@ -16,8 +16,14 @@ body {
 .container {
     background-color: $color-white;
     max-width: 120rem;
-    height: 80vh;
+    min-height: 80vh;
     margin: 10vh auto;
     border-radius: 6px;
     position: relative;
+
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
