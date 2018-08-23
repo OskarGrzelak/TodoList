@@ -17,6 +17,7 @@
         border-bottom: 1px solid transparent;
         width: 85%;
         padding-left: .5rem;
+        clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
         transition: all .2s;     
 
         &:not(:last-child) {

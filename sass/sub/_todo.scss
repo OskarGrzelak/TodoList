@@ -11,18 +11,35 @@
 
     &__add-task {
         margin-bottom: .5rem;
+        opacity: 0;
+        visibility: hidden;
+        //display: none;
+        transition: all .2s;
+
+        &--visible {
+            opacity: 1;
+            visibility: visible;
+            //display: block;
+        }
     }
 
     &__list {
         list-style: none;
-        margin-top: 3rem;
+        margin-top: -8rem;
+        transition: all .2s;
     }
 
     &__task {
         line-height: 1;
+        position: relative;
 
         &:not(:last-child) {
             margin-bottom: 1.5rem;
         }
+    }
+
+    &__date {
+        position: absolute;
+        right: 2rem;
     }
 }
