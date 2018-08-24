@@ -199,6 +199,7 @@ body {
     transition: all .2s; }
   .todo__task {
     line-height: 1;
+    width: 70%;
     position: relative; }
     .todo__task:not(:last-child) {
       margin-bottom: 1.5rem; }
