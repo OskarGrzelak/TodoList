@@ -3,11 +3,13 @@ const newTask = document.querySelector('#new-task');
 const newTaskForm = document.querySelector('.todo__add-task');
 const taskName = document.querySelector('#task-name');
 const taskDate = document.querySelector('#task-date');
+const taskImportance = document.querySelector('#task-importance');
 const addTask = document.querySelector('#add-task');
 const tasksList = document.querySelector('.todo__list');
 const tasksHeader = document.querySelector('#tasks-header');
 const tasksMessage = document.querySelector('#tasks-message');
 const checkboxes = document.querySelectorAll('.checkbox');
+const chceckboxForm = document.querySelector('.checkbox--form');
 
 const tasks = [];
 
@@ -86,7 +88,7 @@ const createTasksArray = type => {
 
 const renderTasksList = tasks => {
     tasks.forEach(el => {
-        const markup = `<li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>${el.taskName}<span class="todo__date">${el.taskDate}</span></li>`;
+    const markup = `<li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>${el.taskName}${el.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date">${el.taskDate}</span></li>`;
         tasksList.insertAdjacentHTML('beforeend', markup);
     });
 };
@@ -159,11 +161,11 @@ addTask.addEventListener('click', e => {
     e.preventDefault();
     if (taskName.value) {
 
-        tasks.push({taskName: taskName.value, taskDate: taskDate.value, taskImportance: false});
+        tasks.push({taskName: taskName.value, taskDate: taskDate.value, taskImportance: taskImportance.checked});
 
         // create an array with tasks depending on a category
         const UI = createTasksArray(Array.from(menuItems)[Array.from(menuItems).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
-        
+
         // render header
         renderTasksHeader(UI.header);
         renderTasksMessage(UI.message);
@@ -176,6 +178,8 @@ addTask.addEventListener('click', e => {
 
         taskName.value = '';
         taskDate.value = '';
+        taskImportance.checked = false;
+        chceckboxForm.children[0].classList.remove('check--show')
         newTask.children[0].textContent = '+';
         newTaskForm.classList.remove('todo__add-task--visible');
         tasksList.style = 'margin-top: -8rem';
@@ -190,3 +194,5 @@ tasksList.addEventListener('click', e => {
         checkbox.children[0].classList.toggle('check--show');
     };
 });
+
+chceckboxForm.parentElement.addEventListener('click', () => chceckboxForm.children[0].classList.toggle('check--show'));
