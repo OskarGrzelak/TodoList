@@ -24,22 +24,23 @@ const getTodayDate = () => {
 };
 
 const createTasksArray = type => {
+    console.log(tasks);
+    let tempArr =[];
     const UI = { currentTasksList: [], header: '', message: '', tasksCounter: 0 };
     const dayOfWeek = new Date().getDay();
     const dayOfMonth = new Date().getDate();
     const month = new Date().getMonth() + 1;
     switch (type) {
         case 'all-tasks':
-            UI.currentTasksList = tasks;
+            tempArr = tasks;
             UI.header = 'tasks';
             break;
         case 'today':
             tasks.forEach(el => {
                 if (el.taskDate === getTodayDate()) {
-                    UI.currentTasksList.push(el);
+                    tempArr.push(el);
                 };
             });
-            UI.tasksCounter = UI.currentTasksList.lenght;
             UI.header = 'tasks for today';
             break;
         case 'this-week':
@@ -53,7 +54,7 @@ const createTasksArray = type => {
             };
             tasks.forEach(el => {
                 if (parseInt(el.taskDate.split('-')[1]) === month && parseInt(el.taskDate.split('-')[2])>=start && parseInt(el.taskDate.split('-')[2])<=end) {
-                    UI.currentTasksList.push(el);
+                    tempArr.push(el);
                 };
             });
             UI.header = 'tasks for this week';
@@ -61,7 +62,7 @@ const createTasksArray = type => {
         case 'this-month':
             tasks.forEach(el => {
                 if (parseInt(el.taskDate.split('-')[1]) === month) {
-                    UI.currentTasksList.push(el);
+                    tempArr.push(el);
                 };
             });
             UI.header = 'tasks for this month';
@@ -69,12 +70,29 @@ const createTasksArray = type => {
         case 'important':
             tasks.forEach(el => {
                 if (el.taskImportance) {
-                    UI.currentTasksList.push(el);
-                }
+                    tempArr.push(el);
+                };
             });
             UI.header = 'important tasks';
             break;
+        case 'archived':
+            tasks.forEach(el => {
+                console.log('archived');
+                if (el.isDone) {
+                    tempArr.push(el);
+                };
+            });
+            UI.header = 'archived tasks';
     }
+    if (type === 'archived') {
+        tempArr.forEach(el => {UI.currentTasksList.push(el)});
+    } else {
+        tempArr.forEach(el => {
+            if (!el.isDone) {
+                UI.currentTasksList.push(el);
+            }
+        });
+    };
     UI.tasksCounter = UI.currentTasksList.length;
     if (UI.tasksCounter === 0) {
         UI.message = '<h3 class="heading-tertiary">You don\'t have any tasks</h3>';  
@@ -88,7 +106,7 @@ const createTasksArray = type => {
 
 const renderTasksList = tasks => {
     tasks.forEach(el => {
-    const markup = `<li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>${el.taskName}${el.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date">${el.taskDate}</span></li>`;
+    const markup = `<li class="todo__task" id="${el.taskID}"><span class="checkbox"><span class="check">&check;</span></span>${el.taskName}${el.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date">${el.taskDate}</span></li>`;
         tasksList.insertAdjacentHTML('beforeend', markup);
     });
 };
@@ -161,7 +179,8 @@ addTask.addEventListener('click', e => {
     e.preventDefault();
     if (taskName.value) {
 
-        tasks.push({taskName: taskName.value, taskDate: taskDate.value, taskImportance: taskImportance.checked});
+        tasks.push({taskName: taskName.value, taskDate: taskDate.value, taskImportance: taskImportance.checked, taskID: tasks.length, isDone: false});
+        console.log(tasks);
 
         // create an array with tasks depending on a category
         const UI = createTasksArray(Array.from(menuItems)[Array.from(menuItems).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
@@ -191,7 +210,20 @@ addTask.addEventListener('click', e => {
 tasksList.addEventListener('click', e => {
     const checkbox = e.target.closest('.checkbox');
     if (checkbox) {
-        checkbox.children[0].classList.toggle('check--show');
+        if (!checkbox.children[0].classList.contains('check--show')) {
+            checkbox.children[0].classList.add('check--show');
+            console.log(e.target.parentElement);
+            tasks[parseInt(e.target.parentElement.id)].isDone = true;
+            console.log(tasks[parseInt(e.target.parentElement.id)]);
+            const UI = createTasksArray(Array.from(menuItems)[Array.from(menuItems).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
+            renderTasksMessage(UI.message);
+            // clear todo section
+            clearTasksList();
+
+            // render todo section
+            renderTasksList(UI.currentTasksList);
+        }
+        
     };
 });
 
