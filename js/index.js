@@ -11,7 +11,7 @@ const tasksMessage = document.querySelector('#tasks-message');
 const checkboxes = document.querySelectorAll('.checkbox');
 const chceckboxForm = document.querySelector('.checkbox--form');
 
-const tasks = [];
+let tasks = [];
 
 const getTodayDate = () => {
     let today = new Date();
@@ -106,7 +106,7 @@ const createTasksArray = type => {
 
 const renderTasksList = tasks => {
     tasks.forEach(el => {
-    const markup = `<li class="todo__task" id="${el.taskID}"><span class="checkbox"><span class="check">&check;</span></span>${el.taskName}${el.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date">${el.taskDate}</span></li>`;
+    const markup = `<li class="todo__task" id="${el.taskID}"><span class="checkbox"><span class="check ${el.isDone ? "check--show" : ""}">&check;</span></span>${el.taskName}${el.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date">${el.taskDate}</span></li>`;
         tasksList.insertAdjacentHTML('beforeend', markup);
     });
 };
@@ -120,6 +120,17 @@ const renderTasksHeader = (header) => {
 const renderTasksMessage = (message) => {
     tasksMessage.innerHTML = message;
 };
+
+const persistData = () => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+};
+
+const readData = () => {
+    const storage = JSON.parse(localStorage.getItem('tasks'));
+
+    // restoring likes from the local storage
+    if (storage) tasks = storage;
+}
 
 // CONTROL
 
@@ -163,6 +174,7 @@ newTask.addEventListener('click', () => {
         // show new task box
 
         taskDate.value = getTodayDate();
+        taskDate.min = getTodayDate();
         tasksList.style = 'margin-top: 3rem';
         newTaskForm.classList.add('todo__add-task--visible');
 
@@ -177,9 +189,10 @@ newTask.addEventListener('click', () => {
 
 addTask.addEventListener('click', e => {
     e.preventDefault();
-    if (taskName.value) {
+    if (taskName.value && taskDate.value >= getTodayDate()) {
 
         tasks.push({taskName: taskName.value, taskDate: taskDate.value, taskImportance: taskImportance.checked, taskID: tasks.length, isDone: false});
+        persistData();
         console.log(tasks);
 
         // create an array with tasks depending on a category
@@ -214,6 +227,7 @@ tasksList.addEventListener('click', e => {
             checkbox.children[0].classList.add('check--show');
             console.log(e.target.parentElement);
             tasks[parseInt(e.target.parentElement.id)].isDone = true;
+            persistData();
             console.log(tasks[parseInt(e.target.parentElement.id)]);
             const UI = createTasksArray(Array.from(menuItems)[Array.from(menuItems).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
             renderTasksMessage(UI.message);
@@ -228,3 +242,21 @@ tasksList.addEventListener('click', e => {
 });
 
 chceckboxForm.parentElement.addEventListener('click', () => chceckboxForm.children[0].classList.toggle('check--show'));
+
+window.addEventListener('load', () => {
+
+
+    readData();
+    // create an array with tasks depending on a category
+    const UI = createTasksArray(Array.from(menuItems)[Array.from(menuItems).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
+
+    // render header
+    renderTasksHeader(UI.header);
+    renderTasksMessage(UI.message);
+
+    // clear todo section
+    clearTasksList();
+
+    // render todo section
+    renderTasksList(UI.currentTasksList);
+});
