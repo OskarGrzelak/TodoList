@@ -2,16 +2,22 @@ class TodoModel {
     constructor() {
         this.tasks = [];
         this.currentTasksList = [];
+        this.currentFreeID = 0;
     }
 
+    getNewID() { return this.currentFreeID++; }
     addTask(task) { this.tasks.push(task); }
     completeTask(id) { this.tasks[id].isDone = true; }
-    removeTask(id) { this.tasks.splice(id, 1); }
+    removeTask(id) { this.tasks.splice(this.tasks.map(el => el.taskID).indexOf(id), 1); }
     persistData() { localStorage.setItem('tasks', JSON.stringify(this.tasks)); }
+    persistCurrentID() { localStorage.setItem('id', JSON.stringify(this.currentFreeID)); }
     readData() {
         const storage = JSON.parse(localStorage.getItem('tasks'));
+        const id = JSON.parse(localStorage.getItem('id'));
         // restoring likes from the local storage
         if (storage) this.tasks = storage;
+        if (id) this.currentFreeID = id;
+        console.log(this.currentFreeID);
     }
 
 }
@@ -56,7 +62,7 @@ class TodoView {
     getTaskDate() { return this.elements.taskDate.value; }
     getTaskImportance() { return this.elements.taskImportance.checked; }
     renderTask(task) {
-        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span>${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date">${task.taskDate}</span></li>`;
+        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><span class="delete">X</span>${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date">${task.taskDate}</span></li>`;
         this.elements.tasksList.insertAdjacentHTML('beforeend', markup);
     }
     renderTasksList(tasks) { tasks.forEach(el => this.renderTask(el)); }
@@ -200,8 +206,9 @@ class TodoController {
             //const taskName = this.todoView.getTaskName();
             if (this.todoView.getTaskName() && this.todoView.getTaskDate() >= this.getTodayDate()) {
         
-                this.todoModel.addTask({taskName: this.todoView.getTaskName(), taskDate: this.todoView.getTaskDate(), taskImportance: this.todoView.getTaskImportance(), taskID: this.todoModel.tasks.length, isDone: false});
+                this.todoModel.addTask({taskName: this.todoView.getTaskName(), taskDate: this.todoView.getTaskDate(), taskImportance: this.todoView.getTaskImportance(), taskID: this.todoModel.getNewID(), isDone: false});
                 this.todoModel.persistData();
+                this.todoModel.persistCurrentID();
         
                 // create an array with tasks depending on a category
                 const UI = this.getUIElements(Array.from(document.querySelectorAll('.menu__item'))[Array.from(document.querySelectorAll('.menu__item')).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
@@ -228,7 +235,7 @@ class TodoController {
             if (checkbox) {
                 if (!checkbox.children[0].classList.contains('check--show')) {
                     checkbox.children[0].classList.add('check--show');
-                    this.todoModel.tasks[parseInt(e.target.parentElement.id)].isDone = true;
+                    this.todoModel.tasks[this.todoModel.tasks.map(el => el.taskID).indexOf(parseInt(e.target.parentElement.id))].isDone = true;
                     this.todoModel.persistData();
                     setTimeout(() => {
                         const UI = this.getUIElements(Array.from(document.querySelectorAll('.menu__item'))[Array.from(document.querySelectorAll('.menu__item')).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
@@ -240,6 +247,19 @@ class TodoController {
                         this.todoView.renderTasksList(UI.currentTasksList);
                     }, 500);
                     
+                } else {
+                    checkbox.children[0].classList.remove('check--show');
+                    this.todoModel.tasks[this.todoModel.tasks.map(el => el.taskID).indexOf(parseInt(e.target.parentElement.parentElement.id))].isDone = false;
+                    this.todoModel.persistData();
+                    setTimeout(() => {
+                        const UI = this.getUIElements(Array.from(document.querySelectorAll('.menu__item'))[Array.from(document.querySelectorAll('.menu__item')).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
+                        this.todoView.renderTasksMessage(UI.message);
+                        // clear todo section
+                        this.todoView.clearTasksList();
+        
+                        // render todo section
+                        this.todoView.renderTasksList(UI.currentTasksList);
+                    }, 500);
                 }
                 
             };
@@ -247,6 +267,27 @@ class TodoController {
         
         document.querySelector('.checkbox--form').parentElement.addEventListener('click', () => document.querySelector('.checkbox--form').children[0].classList.toggle('check--show'));
         
+        // delete btn
+
+        document.querySelector('.todo__list').addEventListener('click', e => {
+            const del = e.target.closest('.delete');
+            if (del) {
+                console.log(e.target.parentElement.id);
+                this.todoModel.removeTask(parseInt(e.target.parentElement.id));
+
+                this.todoModel.persistData();
+                    setTimeout(() => {
+                        const UI = this.getUIElements(Array.from(document.querySelectorAll('.menu__item'))[Array.from(document.querySelectorAll('.menu__item')).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
+                        this.todoView.renderTasksMessage(UI.message);
+                        // clear todo section
+                        this.todoView.clearTasksList();
+        
+                        // render todo section
+                        this.todoView.renderTasksList(UI.currentTasksList);
+                    }, 500);
+            }
+        })
+
         window.addEventListener('load', () => {
         
         
@@ -273,3 +314,4 @@ const todoController = new TodoController(todoModel, todoView);
 todoController.listenEvents();
 
 //localStorage.removeItem('tasks');
+//localStorage.removeItem('id');

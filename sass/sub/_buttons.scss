@@ -77,3 +77,12 @@
         opacity: 1;
     }
 }
+
+.delete {
+    padding: 0 1rem;
+    margin-right: -2rem;
+    cursor: default;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .2s;
+}
