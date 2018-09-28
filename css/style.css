@@ -9,6 +9,10 @@ body {
   font-weight: 300;
   font-size: 3rem;
   letter-spacing: .3rem; }
+  @media only screen and (max-width: 37.5em) {
+    .heading-primary {
+      font-size: 2.2rem;
+      letter-spacing: .2rem; } }
 
 .heading-secondary {
   text-transform: uppercase;
@@ -17,12 +21,28 @@ body {
   letter-spacing: .2rem;
   line-height: 1.2;
   color: #fc4a1a; }
+  @media only screen and (max-width: 37.5em) {
+    .heading-secondary {
+      font-size: 2rem;
+      letter-spacing: .1rem; } }
 
 .heading-tertiary {
   text-transform: uppercase;
   font-weight: 300;
   font-size: 1.8rem;
   letter-spacing: .1rem; }
+  @media only screen and (max-width: 37.5em) {
+    .heading-tertiary {
+      font-size: 1.6rem; } }
+
+.heading-menu {
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 2rem;
+  letter-spacing: .1rem; }
+  @media only screen and (max-width: 56.25em) {
+    .heading-menu {
+      font-size: 2.6rem; } }
 
 .add-btn__btn {
   display: inline-block;
@@ -34,6 +54,14 @@ body {
   cursor: default;
   position: relative;
   transition: all .2s; }
+  @media only screen and (max-width: 56.25em) {
+    .add-btn__btn {
+      margin-left: 1rem; } }
+  @media only screen and (max-width: 37.5em) {
+    .add-btn__btn {
+      transform: translateY(4px);
+      height: 3.2rem;
+      width: 3.2rem; } }
   .add-btn__btn:hover {
     border: 1px solid #fc4a1a; }
     .add-btn__btn:hover .add-btn__sign {
@@ -66,6 +94,9 @@ body {
   margin-right: 1.5rem;
   transform: translateY(1px);
   position: relative; }
+  @media only screen and (max-width: 37.5em) {
+    .checkbox {
+      margin-right: .5rem; } }
   .checkbox--form {
     margin-left: 1rem;
     border: none;
@@ -96,14 +127,24 @@ body {
 
 .form__group:not(:last-child) {
   margin-bottom: 1.5rem; }
+  @media only screen and (max-width: 37.5em) {
+    .form__group:not(:last-child) {
+      margin-bottom: .8rem; } }
 
 .form__group:nth-child(2) .form__input:first-of-type {
   margin-right: 2rem; }
+  @media only screen and (max-width: 37.5em) {
+    .form__group:nth-child(2) .form__input:first-of-type {
+      margin-right: .5rem; } }
 
 .form__label {
   display: inline-block;
   text-transform: uppercase;
   margin-right: 1.5rem; }
+  @media only screen and (max-width: 37.5em) {
+    .form__label {
+      font-size: 1.4rem;
+      margin-right: .5rem; } }
 
 .form__input {
   font-size: 1.8rem;
@@ -112,10 +153,24 @@ body {
   border-radius: 2px;
   border: none;
   box-shadow: 0px 2px 5px 0px rgba(252, 74, 26, 0.6); }
+  @media only screen and (max-width: 37.5em) {
+    .form__input {
+      font-size: 1.4rem; } }
   .form__input:focus {
     outline: none; }
   .form__input[type="text"] {
     width: 50%; }
+    @media only screen and (max-width: 56.25em) {
+      .form__input[type="text"] {
+        width: 60%; } }
+    @media only screen and (max-width: 37.5em) {
+      .form__input[type="text"] {
+        width: 70%; } }
+  .form__input[type="date"] {
+    width: 17rem; }
+    @media only screen and (max-width: 37.5em) {
+      .form__input[type="date"] {
+        width: 14rem; } }
 
 .form__check-input {
   display: none; }
@@ -127,6 +182,12 @@ body {
 
 html {
   font-size: 62.5%; }
+  @media only screen and (max-width: 75em) {
+    html {
+      font-size: 56.25%; } }
+  @media only screen and (max-width: 56.25em) {
+    html {
+      font-size: 50%; } }
 
 body {
   box-sizing: border-box;
@@ -139,6 +200,14 @@ body {
   margin: 10vh auto;
   border-radius: 6px;
   position: relative; }
+  @media only screen and (max-width: 56.25em) {
+    .container {
+      margin: 5vh auto;
+      min-height: 90vh; } }
+  @media only screen and (max-width: 37.5em) {
+    .container {
+      margin: 0 auto;
+      min-height: 100vh; } }
   .container::after {
     content: "";
     display: table;
@@ -150,20 +219,88 @@ body {
   .header__logo {
     display: inline-block;
     margin-right: 4rem; }
+    @media only screen and (max-width: 37.5em) {
+      .header__logo {
+        position: absolute;
+        bottom: .5rem;
+        left: 1rem; } }
     .header__logo img {
       height: 6rem; }
+      @media only screen and (max-width: 37.5em) {
+        .header__logo img {
+          height: 4rem; } }
   .header__message {
     display: inline-block; }
-    .header__message:not(:last-child) {
+    .header__message:nth-child(2) {
       padding-right: 3rem;
       margin-right: 4rem;
       border-right: 2px solid rgba(252, 74, 26, 0.3); }
+      @media only screen and (max-width: 56.25em) {
+        .header__message:nth-child(2) {
+          padding-right: 0;
+          padding-bottom: 2px;
+          margin-right: 0;
+          margin-bottom: 1rem;
+          border-right: none;
+          border-bottom: 2px solid rgba(252, 74, 26, 0.3); } }
+  .header__menu {
+    position: absolute;
+    top: 3rem;
+    right: 3rem;
+    z-index: 200;
+    display: none; }
+    @media only screen and (max-width: 56.25em) {
+      .header__menu {
+        display: block; } }
+  .header__icon {
+    position: relative;
+    transform: translateY(1rem); }
+    .header__icon, .header__icon::before, .header__icon::after {
+      width: 3rem;
+      height: 2px;
+      background-color: #fc4a1a;
+      display: inline-block; }
+    .header__icon::before, .header__icon::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all .2s; }
+    .header__icon::before {
+      top: -.8rem; }
+    .header__icon::after {
+      top: .8rem; }
+
+@media only screen and (max-width: 56.25em) {
+  #tasks-message {
+    display: block;
+    margin-left: 19rem; } }
+
+@media only screen and (max-width: 37.5em) {
+  #tasks-message {
+    margin-left: 0; } }
 
 .menu {
   float: left;
   display: block;
   width: 20%;
   padding: 2rem; }
+  @media only screen and (max-width: 56.25em) {
+    .menu {
+      float: none;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 100;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: none; } }
+  @media only screen and (max-width: 56.25em) {
+    .menu__container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 25rem; } }
   .menu__header {
     margin-bottom: 2rem; }
   .menu__list {
@@ -175,6 +312,9 @@ body {
     padding-left: .5rem;
     clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
     transition: all .2s; }
+    @media only screen and (max-width: 56.25em) {
+      .menu__item {
+        font-size: 2.4rem; } }
     .menu__item:not(:last-child) {
       margin-bottom: .5rem; }
     .menu__item:hover {
@@ -190,8 +330,16 @@ body {
   float: left;
   display: block;
   width: 80%;
-  padding: 2rem;
+  padding: 0 2rem;
   margin-bottom: 8rem; }
+  @media only screen and (max-width: 56.25em) {
+    .todo {
+      float: none;
+      margin: 0 auto 8rem auto;
+      width: 90%; } }
+  @media only screen and (max-width: 37.5em) {
+    .todo {
+      width: 100%; } }
   .todo__header {
     margin-bottom: .5rem; }
   .todo__add-task {
@@ -210,6 +358,12 @@ body {
     line-height: 1;
     width: 70%;
     position: relative; }
+    @media only screen and (max-width: 56.25em) {
+      .todo__task {
+        width: 90%; } }
+    @media only screen and (max-width: 37.5em) {
+      .todo__task {
+        width: 100%; } }
     .todo__task:not(:last-child) {
       margin-bottom: 1.5rem; }
     .todo__task:hover .delete {
@@ -222,9 +376,20 @@ body {
     font-weight: 700;
     letter-spacing: .4rem;
     color: #fc4a1a; }
+    @media only screen and (max-width: 37.5em) {
+      .todo__importance {
+        margin-left: .5rem;
+        font-size: 2rem; } }
   .todo__date {
     position: absolute;
     right: 2rem; }
+    @media only screen and (max-width: 37.5em) {
+      .todo__date {
+        position: unset;
+        display: block;
+        margin-top: .8rem;
+        margin-left: 3.2rem;
+        font-size: 1.6rem; } }
 
 .footer {
   position: absolute;

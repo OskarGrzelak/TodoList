@@ -6,6 +6,14 @@
 
 html {
     font-size: 62.5%;
+
+    @include respond(tab-land) {
+        font-size: 56.25%;
+    }
+
+    @include respond(tab-port) {
+        font-size: 50%;
+    }
 }
 
 body {
@@ -20,6 +28,16 @@ body {
     margin: 10vh auto;
     border-radius: 6px;
     position: relative;
+
+    @include respond(tab-port) {
+        margin: 5vh auto;
+        min-height: 90vh;
+    }
+
+    @include respond(phone) {
+        margin: 0 auto;
+        min-height: 100vh;
+    }
 
     &::after {
         content: "";

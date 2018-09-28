@@ -4,6 +4,27 @@
     width: 20%;
     padding: 2rem;
 
+    @include respond(tab-port) {
+        float: none;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 100;
+        background-color: rgba($color-white, .9);
+        display: none;
+    }
+
+    &__container {
+        @include respond(tab-port) {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 25rem;
+        }
+    }
+
     &__header {
         margin-bottom: 2rem;
     }
@@ -18,7 +39,11 @@
         width: 85%;
         padding-left: .5rem;
         clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
-        transition: all .2s;     
+        transition: all .2s;
+        
+        @include respond(tab-port) {
+            font-size: 2.4rem;
+        }
 
         &:not(:last-child) {
             margin-bottom: .5rem;

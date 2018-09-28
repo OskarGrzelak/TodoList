@@ -1,6 +1,7 @@
 class TodoView {
     constructor() {
         this.elements = {
+            menu: document.querySelector('.menu'),
             menuItems: document.querySelectorAll('.menu__item'),
             newTask: document.querySelector('#new-task'),
             newTaskForm: document.querySelector('.todo__add-task'),
@@ -14,6 +15,16 @@ class TodoView {
             checkboxes: document.querySelectorAll('.checkbox'),
             chceckboxForm: document.querySelector('.checkbox--form')
         };
+    }
+    toggleMenu(state) { 
+        if (state === false) {
+            this.elements.menu.style.display = 'block';
+            state = true;
+        } else {
+            this.elements.menu.style.display = 'none';
+            state = false;
+        }
+        return state;
     }
     toggleTaskForm(date) {
         // if plus sign 
@@ -38,7 +49,7 @@ class TodoView {
     getTaskDate() { return this.elements.taskDate.value; }
     getTaskImportance() { return this.elements.taskImportance.checked; }
     renderTask(task) {
-        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><span class="delete">X</span>${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date">${task.taskDate}</span></li>`;
+        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><span class="delete">X</span>${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}</span><span class="todo__date">${task.taskDate}</span></li>`;
         this.elements.tasksList.insertAdjacentHTML('beforeend', markup);
     }
     renderTasksList(tasks) { tasks.forEach(el => this.renderTask(el)); }

@@ -1,90 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css">
 
-    <title>Todo List</title>
-</head>
-<body>
+        <title>Todo List</title>
+    </head>
+    <body>
 
-    <div class="container">
-        <header class="header">
-            <div class="header__logo"><img src="img/LogoMakr_2AH1p2.png" alt="ToDoS"></div>
-            <div class="header__message">
-                <h2 class="heading-secondary">Hi there! Let's see,</h2>
-                <h2 class="heading-secondary">what you have to do</h2>
-            </div>
-            <div class="header__message" id="tasks-message">
-                <h3 class="heading-tertiary">You don't have any tasks</h3>
-            </div>
-        </header>
+        <div class="container">
+            <header class="header">
+                <div class="header__logo"><img src="img/LogoMakr_2AH1p2.png" alt="ToDoS"></div>
+                <div class="header__message">
+                    <h2 class="heading-secondary">Hi there! Let's see,</h2>
+                    <h2 class="heading-secondary">what you have to do</h2>
+                </div>
+                <div class="header__message" id="tasks-message">
+                    <h3 class="heading-tertiary">You don't have any tasks</h3>
+                </div>
+                <div class="header__menu">
+                    <span class="header__icon">&nbsp;</span>
+                </div>
+            </header>
 
-        <aside class="menu">
-            <div class="menu__header">
-                <h3 class="heading-tertiary">Your lists</h3>
-            </div>
-            <ul class="menu__list">
-                <li class="menu__item menu__item--active" id="all-tasks">All tasks</li>
-                <li class="menu__item" id="today">Today</li>
-                <li class="menu__item" id="this-week">This week</li>
-                <li class="menu__item"id="this-month">This month</li>
-                <li class="menu__item" id="important">Important</li>
-                <li class="menu__item" id="archived">Archived</li>
-            </ul>
-        </aside>
-
-        <main class="todo">
-            <div class="todo__header">
-                <h1 class="heading-primary"><span id="tasks-header">All tasks</span> <!-- (<span id="today-date">20th August</span>) --> <div class="add-btn__btn" id="new-task"><span class="add-btn__sign">&plus;</span></div></h1>
-            </div>
-            <div class="todo__add-task">
-                <form class="form">
-                    <div class="form__group">
-                        <label for="task-name" class="form__label">New task:</label>
-                        <input type="text" class="form__input" id="task-name">
+            <aside class="menu">
+                <div class="menu__container">
+                    <div class="menu__header">
+                        <h3 class="heading-menu">Your lists</h3>
                     </div>
-                    <div class="form__group">
-                        <label for="task-date" class="form__label">Due date:</label>
-                        <input type="date" class="form__input" id="task-date">
-                        <label for="task-importance" class="form__label">Important?<span class="checkbox checkbox--form"><span class="check">&check;</span></span></label>
-                        <input type="checkbox" name="Important" class="form__check-input" id="task-importance">
-                    </div>
-                    <div class="form__group">
-                        <button class="form-btn" id="add-task">Add task</button>
-                    </div>
-                </form>
-            </div>
-            <div class="todo__tasks">
-                <ul class="todo__list">
-                    <!-- <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Napisać artykuł dla Patryka<span class="todo__date">2018-08-23</span></li>
-                    <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zaprojektować stronę internetową</li>
-                    <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zrobić zakupy spożywcze</li>
-                    <li class="todo__task"><span class="checkbox"></span>Umyć naczynia</li>
-                    <li class="todo__task"><span class="checkbox"></span>Skończyć Mad Maxa</li>
-                    <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Napisać artykuł dla Patryka</li>
-                    <li class="todo__task"><span class="checkbox"></span>Zaprojektować stronę internetową</li>
-                    <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zrobić zakupy spożywcze</li>
-                    <li class="todo__task"><span class="checkbox"></span>Umyć naczynia</li> 
-                    <li class="todo__task"><span class="checkbox"></span>Skończyć Mad Maxa<span class="todo__importance">!!!</span></li> -->
-                </ul>
-            </div>
-        </main>
-    
-        <footer class="footer">
-            <p class="footer__copyright">Simple todo list made by Oskar Grzelak as a web development exercise.</p>
-            <p class="footer__copyright">Copyright by &copy; Oskar Grzelak, 2018</p>
-        </footer>
-    </div>
-    
-    <!-- <script src="js/index.js"></script> -->
-    <script src="js/TodoModel.js"></script>
-    <script src="js/TodoView.js"></script>
-    <script src="js/TodoController.js"></script>
-    <script src="js/TodoList.js"></script>
-</body>
+                    <ul class="menu__list">
+                        <li class="menu__item menu__item--active" id="all-tasks">All tasks</li>
+                        <li class="menu__item" id="today">Today</li>
+                        <li class="menu__item" id="this-week">This week</li>
+                        <li class="menu__item"id="this-month">This month</li>
+                        <li class="menu__item" id="important">Important</li>
+                        <li class="menu__item" id="archived">Archived</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main class="todo">
+                <div class="todo__header">
+                    <h1 class="heading-primary"><span id="tasks-header">All tasks</span> <!-- (<span id="today-date">20th August</span>) --> <div class="add-btn__btn" id="new-task"><span class="add-btn__sign">&plus;</span></div></h1>
+                </div>
+                <div class="todo__add-task">
+                    <form class="form">
+                        <div class="form__group">
+                            <label for="task-name" class="form__label">New task:</label>
+                            <input type="text" class="form__input" id="task-name">
+                        </div>
+                        <div class="form__group">
+                            <label for="task-date" class="form__label">Due date:</label>
+                            <input type="date" class="form__input" id="task-date">
+                            <label for="task-importance" class="form__label">Important?<span class="checkbox checkbox--form"><span class="check">&check;</span></span></label>
+                            <input type="checkbox" name="Important" class="form__check-input" id="task-importance">
+                        </div>
+                        <div class="form__group">
+                            <button class="form-btn" id="add-task">Add task</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="todo__tasks">
+                    <ul class="todo__list">
+                        <!-- <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Napisać artykuł dla Patryka<span class="todo__date">2018-08-23</span></li>
+                        <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zaprojektować stronę internetową</li>
+                        <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zrobić zakupy spożywcze</li>
+                        <li class="todo__task"><span class="checkbox"></span>Umyć naczynia</li>
+                        <li class="todo__task"><span class="checkbox"></span>Skończyć Mad Maxa</li>
+                        <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Napisać artykuł dla Patryka</li>
+                        <li class="todo__task"><span class="checkbox"></span>Zaprojektować stronę internetową</li>
+                        <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zrobić zakupy spożywcze</li>
+                        <li class="todo__task"><span class="checkbox"></span>Umyć naczynia</li> 
+                        <li class="todo__task"><span class="checkbox"></span>Skończyć Mad Maxa<span class="todo__importance">!!!</span></li> -->
+                    </ul>
+                </div>
+            </main>
+        
+            <footer class="footer">
+                <p class="footer__copyright">Copyright by &copy; Oskar Grzelak, 2018</p>
+            </footer>
+        </div>
+        
+        <!-- <script src="js/index.js"></script> -->
+        <script src="js/TodoModel.js"></script>
+        <script src="js/TodoView.js"></script>
+        <script src="js/TodoController.js"></script>
+        <script src="js/TodoList.js"></script>
+    </body>
 </html>

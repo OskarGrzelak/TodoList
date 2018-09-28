@@ -94,6 +94,9 @@ class TodoController {
     }
 
     listenEvents() {
+
+        document.querySelector('.header__menu').addEventListener('click', () => this.todoModel.setIsMenuDisplayed(this.todoView.toggleMenu(this.todoModel.getIsMenuDisplayed())));
+
         Array.from(document.querySelectorAll('.menu__item')).forEach(el => el.addEventListener('click', e => {
 
             if(!e.target.classList.contains('menu__item--active')) {
@@ -107,7 +110,8 @@ class TodoController {
                 
                 // render UI
                 this.todoView.renderUI(UI);
-            };    
+            };
+            if(window.innerWidth <= 900) this.todoModel.setIsMenuDisplayed(this.todoView.toggleMenu(this.todoModel.getIsMenuDisplayed()));
         }));
         
         // new task
@@ -178,7 +182,7 @@ class TodoController {
                         this.todoView.renderUI(UI);
                     }, 500);
             }
-        })
+        });
 
         window.addEventListener('load', () => {
         

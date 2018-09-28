@@ -6,18 +6,90 @@
         display: inline-block;
         margin-right: 4rem;
 
+        @include respond(phone) {
+            position: absolute;
+            bottom: .5rem;
+            left: 1rem;
+        }
+
         & img {
             height: 6rem;
+
+            @include respond(phone) {
+                height: 4rem;
+            }
         }
     }
 
     &__message {
         display: inline-block;
 
-        &:not(:last-child) {
+        &:nth-child(2) {
             padding-right: 3rem;
             margin-right: 4rem;
             border-right: 2px solid rgba($color-primary, .3);
+
+            @include respond(tab-port) {
+                padding-right: 0;
+                padding-bottom: 2px;
+                margin-right: 0;
+                margin-bottom: 1rem;
+                border-right: none;
+                border-bottom: 2px solid rgba($color-primary, .3);
+            }
         }
+    }
+
+    &__menu {
+        position: absolute;
+        top: 3rem;
+        right: 3rem;
+        z-index: 200;
+        display: none;
+
+        @include respond(tab-port) {
+            display: block;
+        }
+    }
+
+    &__icon {
+        position: relative;
+        transform: translateY(1rem);
+
+        &,
+        &::before,
+        &::after {
+            width: 3rem;
+            height: 2px;
+            background-color: $color-primary;
+            display: inline-block;
+        }
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            transition: all .2s;
+        }
+
+        &::before {
+            top: -.8rem;
+        }
+
+        &::after {
+            top: .8rem;
+        }
+    }
+}
+
+#tasks-message {
+    @include respond(tab-port) {
+        display: block;
+        margin-left: 19rem;
+    }
+
+    @include respond(phone) {
+        margin-left: 0;
     }
 }

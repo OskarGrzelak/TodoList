@@ -4,10 +4,18 @@
 
         &:not(:last-child) {
             margin-bottom: 1.5rem;
+
+            @include respond(phone) {
+                margin-bottom: .8rem;
+            }
         }
 
         &:nth-child(2) .form__input:first-of-type {
             margin-right: 2rem;
+
+            @include respond(phone) {
+                margin-right: .5rem;
+            }
         }
     }
 
@@ -15,6 +23,11 @@
         display: inline-block;
         text-transform: uppercase;
         margin-right: 1.5rem;
+
+        @include respond(phone) {
+            font-size: 1.4rem;
+            margin-right: .5rem;
+        }
     }
 
     &__input {
@@ -25,12 +38,32 @@
         border: none;
         box-shadow: 0px 2px 5px 0px rgba($color-primary, .6);
 
+        @include respond(phone) {
+            font-size: 1.4rem;
+        }
+
         &:focus {
             outline: none;
         }
 
         &[type="text"] {
             width: 50%;
+
+            @include respond(tab-port) {
+                width: 60%;
+            }
+
+            @include respond(phone) {
+                width: 70%;
+            }
+        }
+
+        &[type="date"] {
+            width: 17rem;
+
+            @include respond(phone) {
+                width: 14rem;
+            }
         }
     }
 
