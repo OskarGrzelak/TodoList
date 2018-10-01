@@ -49,8 +49,8 @@ body {
   height: 3.5rem;
   width: 3.5rem;
   border: 1px solid #313131;
+  margin-left: 1.5rem;
   transform: translateY(6px);
-  margin-left: 2rem;
   cursor: default;
   position: relative;
   transition: all .2s; }
@@ -71,8 +71,10 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-45%, -50%);
+  transform: translate(-50%, -50%) rotate(0);
   transition: all .2s; }
+  .add-btn__sign--rotated {
+    transform: translate(-50%, -50%) rotate(135deg); }
 
 .form-btn {
   background-color: #ffffff;
@@ -118,9 +120,12 @@ body {
     opacity: 1; }
 
 .delete {
-  padding: 0 1rem;
+  padding: 0 .5rem;
   margin-right: -2rem;
   cursor: default;
+  font-size: 2.4rem;
+  color: #fc4a1a;
+  transform: translateY(3px);
   visibility: hidden;
   opacity: 0;
   transition: all .2s; }

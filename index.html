@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
         <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
 
         <title>Todo List</title>
@@ -45,7 +46,7 @@
 
             <main class="todo">
                 <div class="todo__header">
-                    <h1 class="heading-primary"><span id="tasks-header">All tasks</span> <!-- (<span id="today-date">20th August</span>) --> <div class="add-btn__btn" id="new-task"><span class="add-btn__sign">&plus;</span></div></h1>
+                    <h1 class="heading-primary"><span id="tasks-header">All tasks</span> <!-- (<span id="today-date">20th August</span>) --> <div class="add-btn__btn" id="new-task"><i class="material-icons add-btn__sign">add</i></div></h1>
                 </div>
                 <div class="todo__add-task">
                     <form class="form">
@@ -66,16 +67,6 @@
                 </div>
                 <div class="todo__tasks">
                     <ul class="todo__list">
-                        <!-- <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Napisać artykuł dla Patryka<span class="todo__date">2018-08-23</span></li>
-                        <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zaprojektować stronę internetową</li>
-                        <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zrobić zakupy spożywcze</li>
-                        <li class="todo__task"><span class="checkbox"></span>Umyć naczynia</li>
-                        <li class="todo__task"><span class="checkbox"></span>Skończyć Mad Maxa</li>
-                        <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Napisać artykuł dla Patryka</li>
-                        <li class="todo__task"><span class="checkbox"></span>Zaprojektować stronę internetową</li>
-                        <li class="todo__task"><span class="checkbox"><span class="check">&check;</span></span>Zrobić zakupy spożywcze</li>
-                        <li class="todo__task"><span class="checkbox"></span>Umyć naczynia</li> 
-                        <li class="todo__task"><span class="checkbox"></span>Skończyć Mad Maxa<span class="todo__importance">!!!</span></li> -->
                     </ul>
                 </div>
             </main>
@@ -85,7 +76,6 @@
             </footer>
         </div>
         
-        <!-- <script src="js/index.js"></script> -->
         <script src="js/TodoModel.js"></script>
         <script src="js/TodoView.js"></script>
         <script src="js/TodoController.js"></script>

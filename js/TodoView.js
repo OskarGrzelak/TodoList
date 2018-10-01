@@ -28,9 +28,9 @@ class TodoView {
     }
     toggleTaskForm(date) {
         // if plus sign 
-        if (this.elements.newTask.children[0].textContent === '+') {
+        if (!this.elements.newTask.children[0].classList.contains('add-btn__sign--rotated')) {
             // change it to x sign
-            this.elements.newTask.children[0].textContent = 'x';
+            this.elements.newTask.children[0].classList.add('add-btn__sign--rotated');
             // show new task box
     
             this.elements.taskDate.value = date;
@@ -39,7 +39,7 @@ class TodoView {
     
         } else {
             //change it to plus sign
-            this.elements.newTask.children[0].textContent = '+';
+            this.elements.newTask.children[0].classList.remove('add-btn__sign--rotated');
             // hide new task box
             this.elements.newTaskForm.classList.remove('todo__add-task--visible');
             this.elements.tasksList.style = 'margin-top: -8rem';
@@ -49,7 +49,7 @@ class TodoView {
     getTaskDate() { return this.elements.taskDate.value; }
     getTaskImportance() { return this.elements.taskImportance.checked; }
     renderTask(task) {
-        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><span class="delete">X</span>${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}</span><span class="todo__date">${task.taskDate}</span></li>`;
+        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><i class="material-icons delete">delete</i>${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}</span><span class="todo__date">${task.taskDate}</span></li>`;
         this.elements.tasksList.insertAdjacentHTML('beforeend', markup);
     }
     renderTasksList(tasks) { tasks.forEach(el => this.renderTask(el)); }
