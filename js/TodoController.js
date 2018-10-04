@@ -65,6 +65,14 @@ class TodoController {
                 });
                 UI.header = 'important tasks';
                 break;
+            case 'overdue':
+                this.todoModel.tasks.forEach(el => {
+                    if (el.taskDate < this.getTodayDate()) {
+                        tempArr.push(el);
+                    };
+                });
+                UI.header = 'overdue tasks';
+                break;
             case 'archived':
                 this.todoModel.tasks.forEach(el => {
                     if (el.isDone) {
