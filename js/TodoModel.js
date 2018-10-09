@@ -22,4 +22,8 @@ class TodoModel {
         if (storage) this.tasks = storage;
         if (id) this.currentFreeID = id;
     }
+    checkOverdue(id, date) {
+        const index = this.tasks.map(el => el.taskID).indexOf(id);
+        if(this.tasks[index].taskDate < date) this.tasks[index].isOverdue = true;
+    }
 }

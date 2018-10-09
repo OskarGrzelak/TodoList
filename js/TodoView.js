@@ -4,7 +4,8 @@ class TodoView {
             menu: document.querySelector('.menu'),
             menuItems: document.querySelectorAll('.menu__item'),
             newTask: document.querySelector('#new-task'),
-            newTaskForm: document.querySelector('.todo__add-task'),
+            newTaskForm: document.querySelector('.form-container'),
+            taskForm: document.querySelector('.form'),
             taskName: document.querySelector('#task-name'),
             taskDate: document.querySelector('#task-date'),
             taskImportance: document.querySelector('#task-importance'),
@@ -27,29 +28,20 @@ class TodoView {
         return state;
     }
     toggleTaskForm(date) {
-        // if plus sign 
-        if (!this.elements.newTask.children[0].classList.contains('add-btn__sign--rotated')) {
-            // change it to x sign
-            this.elements.newTask.children[0].classList.add('add-btn__sign--rotated');
-            // show new task box
-    
+        if (!this.elements.newTaskForm.classList.contains('form-container--visible')) {
             this.elements.taskDate.value = date;
-            this.elements.tasksList.style = 'margin-top: 3rem';
-            this.elements.newTaskForm.classList.add('todo__add-task--visible');
-    
+            this.elements.newTaskForm.classList.add('form-container--visible');
+            this.elements.taskForm.style.display = 'block';
         } else {
-            //change it to plus sign
-            this.elements.newTask.children[0].classList.remove('add-btn__sign--rotated');
-            // hide new task box
-            this.elements.newTaskForm.classList.remove('todo__add-task--visible');
-            this.elements.tasksList.style = 'margin-top: -8rem';
-        }
+            this.elements.taskForm.style.display = 'none';
+            this.elements.newTaskForm.classList.remove('form-container--visible');
+        };
     }
     getTaskName() { return  this.elements.taskName.value; }
     getTaskDate() { return this.elements.taskDate.value; }
     getTaskImportance() { return this.elements.taskImportance.checked; }
     renderTask(task) {
-        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><i class="material-icons delete">delete</i>${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}</span><span class="todo__date">${task.taskDate}</span></li>`;
+        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><i class="material-icons delete">delete</i>${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}</span><span class="todo__date ${task.isOverdue ? 'todo__date--overdue' : ''}">${task.taskDate}</span></li>`;
         this.elements.tasksList.insertAdjacentHTML('beforeend', markup);
     }
     renderTasksList(tasks) { tasks.forEach(el => this.renderTask(el)); }

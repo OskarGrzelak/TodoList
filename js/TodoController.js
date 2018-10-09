@@ -20,6 +20,7 @@ class TodoController {
         const dayOfWeek = new Date().getDay();
         const dayOfMonth = new Date().getDate();
         const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear();
         switch (type) {
             case 'all-tasks':
                 tempArr = this.todoModel.tasks;
@@ -43,7 +44,7 @@ class TodoController {
                     end = dayOfMonth;
                 };
                 this.todoModel.tasks.forEach(el => {
-                    if (parseInt(el.taskDate.split('-')[1]) === month && parseInt(el.taskDate.split('-')[2])>=start && parseInt(el.taskDate.split('-')[2])<=end) {
+                    if (parseInt(el.taskDate.split('-')[1]) === month && parseInt(el.taskDate.split('-')[0]) === year && parseInt(el.taskDate.split('-')[2])>=start && parseInt(el.taskDate.split('-')[2])<=end) {
                         tempArr.push(el);
                     };
                 });
@@ -51,7 +52,7 @@ class TodoController {
                 break;
             case 'this-month':
                 this.todoModel.tasks.forEach(el => {
-                    if (parseInt(el.taskDate.split('-')[1]) === month) {
+                    if (parseInt(el.taskDate.split('-')[1]) === month && parseInt(el.taskDate.split('-')[0]) === year) {
                         tempArr.push(el);
                     };
                 });
@@ -112,6 +113,13 @@ class TodoController {
                 // mark chosen list
                 Array.from(document.querySelectorAll('.menu__item')).forEach(el => el.classList.remove('menu__item--active'));
                 e.target.classList.add('menu__item--active');
+
+                // chceck overdue
+                this.todoModel.tasks.forEach(el => {
+                    this.todoModel.checkOverdue(el.taskID, this.getTodayDate());
+                });
+                this.todoModel.persistData();
+                this.todoModel.persistCurrentID();
         
                 // create an array with tasks depending on a category
                 const UI = this.getUIElements(e.target.id);
@@ -125,13 +133,14 @@ class TodoController {
         // new task
         
         document.querySelector('#new-task').addEventListener('click', () => this.todoView.toggleTaskForm(this.getTodayDate()));
+        document.querySelector('.form-container__close').addEventListener('click', () => this.todoView.toggleTaskForm(this.getTodayDate()));
         
         document.querySelector('#add-task').addEventListener('click', e => {
             e.preventDefault();
             //const taskName = this.todoView.getTaskName();
             if (this.todoView.getTaskName() && this.todoView.getTaskDate() >= this.getTodayDate()) {
         
-                this.todoModel.addTask({taskName: this.todoView.getTaskName(), taskDate: this.todoView.getTaskDate(), taskImportance: this.todoView.getTaskImportance(), taskID: this.todoModel.getNewID(), isDone: false});
+                this.todoModel.addTask({taskName: this.todoView.getTaskName(), taskDate: this.todoView.getTaskDate(), taskImportance: this.todoView.getTaskImportance(), taskID: this.todoModel.getNewID(), isDone: false, isOverdue: false});
                 this.todoModel.persistData();
                 this.todoModel.persistCurrentID();
         

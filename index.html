@@ -49,23 +49,6 @@
                 <div class="todo__header">
                     <h1 class="heading-primary"><span id="tasks-header">All tasks</span> <!-- (<span id="today-date">20th August</span>) --> <div class="add-btn__btn" id="new-task"><i class="material-icons add-btn__sign">add</i></div></h1>
                 </div>
-                <div class="todo__add-task">
-                    <form class="form">
-                        <div class="form__group">
-                            <label for="task-name" class="form__label">New task:</label>
-                            <input type="text" class="form__input" id="task-name">
-                        </div>
-                        <div class="form__group">
-                            <label for="task-date" class="form__label">Due date:</label>
-                            <input type="date" class="form__input" id="task-date">
-                            <label for="task-importance" class="form__label">Important?<span class="checkbox checkbox--form"><span class="check">&check;</span></span></label>
-                            <input type="checkbox" name="Important" class="form__check-input" id="task-importance">
-                        </div>
-                        <div class="form__group">
-                            <button class="form-btn" id="add-task">Add task</button>
-                        </div>
-                    </form>
-                </div>
                 <div class="todo__tasks">
                     <ul class="todo__list">
                     </ul>
@@ -75,6 +58,29 @@
             <footer class="footer">
                 <p class="footer__copyright">Copyright by &copy; Oskar Grzelak, 2018</p>
             </footer>
+        </div>
+
+        <div class="form-container">
+            <div class="form-container__close"><i class="material-icons">clear</i></div>
+            <form class="form">
+                <div class="form__group">
+                    <label for="task-name" class="form__label form__label--block">So, what is your task?</label>
+                    <input type="text" class="form__input" id="task-name">
+                </div>
+                <div class="form__group">
+                    <label for="task-date" class="form__label">Due date:</label>
+                    <input type="date" class="form__input" id="task-date">
+                    <label for="task-importance" class="form__label">Important?<span class="checkbox checkbox--form"><span class="check">&check;</span></span></label>
+                    <input type="checkbox" name="Important" class="form__check-input" id="task-importance">
+                </div>
+                <div class="form__group">
+                    <label for="note" class="form__label form__label--block">Do you have any notes?</label>
+                    <textarea name="note" id="note" class="form__textarea"></textarea>
+                </div>
+                <div class="form__group">
+                    <button class="form-btn" id="add-task">Add task</button>
+                </div>
+            </form>
         </div>
         
         <script src="js/TodoModel.js"></script>
