@@ -10,6 +10,15 @@ class TodoModel {
     addTask(task) { this.tasks.push(task); }
     completeTask(id) { this.tasks[id].isDone = true; }
     removeTask(id) { this.tasks.splice(this.tasks.map(el => el.taskID).indexOf(id), 1); }
+    updateTask(id, task) {
+        const index = this.tasks.map(el => el.taskID).indexOf(id);
+        console.log(this.tasks[index]);
+        this.tasks[index].taskName = task.name;
+        this.tasks[index].taskDate = task.date;
+        this.tasks[index].taskImportance = task.importance;
+        this.tasks[index].taskNote = task.note;
+        console.log(this.tasks[index]);
+    }
     setIsMenuDisplayed(state) { this.isMenuDisplayed = state; }
     getIsMenuDisplayed() { return this.isMenuDisplayed; }
     toggleMenu() { this.isMenuDisplayed === true ? this.isMenuDisplayed = false : this.isMenuDisplayed = true; }

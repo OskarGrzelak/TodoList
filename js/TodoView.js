@@ -9,6 +9,7 @@ class TodoView {
             taskName: document.querySelector('#task-name'),
             taskDate: document.querySelector('#task-date'),
             taskImportance: document.querySelector('#task-importance'),
+            taskNote: document.querySelector('#task-note'),
             addTask: document.querySelector('#add-task'),
             tasksList: document.querySelector('.todo__list'),
             tasksHeader: document.querySelector('#tasks-header'),
@@ -35,13 +36,15 @@ class TodoView {
         } else {
             this.elements.taskForm.style.display = 'none';
             this.elements.newTaskForm.classList.remove('form-container--visible');
+            this.clearInputs();
         };
     }
     getTaskName() { return  this.elements.taskName.value; }
     getTaskDate() { return this.elements.taskDate.value; }
     getTaskImportance() { return this.elements.taskImportance.checked; }
+    getTaskNote() { return this.elements.taskNote.value; }
     renderTask(task) {
-        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><i class="material-icons delete">delete</i>${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}</span><span class="todo__date ${task.isOverdue ? 'todo__date--overdue' : ''}">${task.taskDate}</span></li>`;
+        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><i class="material-icons delete">delete</i><span class="task">${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date ${task.isOverdue ? 'todo__date--overdue' : ''}">${task.taskDate}</span></span></li>`;
         this.elements.tasksList.insertAdjacentHTML('beforeend', markup);
     }
     renderTasksList(tasks) { tasks.forEach(el => this.renderTask(el)); }
@@ -52,6 +55,8 @@ class TodoView {
         this.elements.taskName.value = '';
         this.elements.taskDate.value = '';
         this.elements.taskImportance.checked = false;
+        this.elements.taskNote.value = '';
+        this.elements.addTask.textContent = 'Add task';
         this.elements.chceckboxForm.children[0].classList.remove('check--show');
     }
     renderUI(UI) {
@@ -64,5 +69,15 @@ class TodoView {
 
         // render todo section
         this.renderTasksList(UI.currentTasksList);
+    }
+    showTask(task) {
+        this.elements.taskName.value = task.taskName;
+        this.elements.taskDate.value = task.taskDate;
+        this.elements.taskImportance.checked = task.taskImportance;
+        if (task.taskImportance) this.elements.chceckboxForm.children[0].classList.add('check--show');
+        this.elements.taskNote.value = task.taskNote;
+        this.elements.addTask.textContent = 'Edit task';
+        this.elements.newTaskForm.classList.add('form-container--visible');
+        this.elements.taskForm.style.display = 'block';
     }
 }
