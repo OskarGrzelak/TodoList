@@ -60,7 +60,7 @@ class TodoView {
         this.elements.chceckboxForm.children[0].classList.remove('check--show');
     }
     renderUI(UI) {
-        // render header
+        // render headers
         this.renderTasksHeader(UI.header);
         this.renderTasksMessage(UI.message);
 

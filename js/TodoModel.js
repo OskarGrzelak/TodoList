@@ -12,12 +12,21 @@ class TodoModel {
     removeTask(id) { this.tasks.splice(this.tasks.map(el => el.taskID).indexOf(id), 1); }
     updateTask(id, task) {
         const index = this.tasks.map(el => el.taskID).indexOf(id);
-        console.log(this.tasks[index]);
         this.tasks[index].taskName = task.name;
         this.tasks[index].taskDate = task.date;
         this.tasks[index].taskImportance = task.importance;
         this.tasks[index].taskNote = task.note;
-        console.log(this.tasks[index]);
+    }
+    setTaskTypes(task, today) {
+        const dayOfWeek = new Date().getDay();
+        const dayOfMonth = new Date().getDate();
+        const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear();
+        if (task.taskDate === today) {
+            task.types.today = true;
+            task.types.week = true;
+            task.types.month = true;
+        } /* else if () */
     }
     setIsMenuDisplayed(state) { this.isMenuDisplayed = state; }
     getIsMenuDisplayed() { return this.isMenuDisplayed; }

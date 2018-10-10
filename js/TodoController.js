@@ -137,16 +137,39 @@ class TodoController {
         
         document.querySelector('#add-task').addEventListener('click', e => {
             e.preventDefault();
-            //const taskName = this.todoView.getTaskName();
+            // check if a user is adding a new task or just editing old one (it depends on button's text)
             if(e.target.textContent === 'Add task') {
-            if (this.todoView.getTaskName() && this.todoView.getTaskDate() >= this.getTodayDate()) {
-        
-                this.todoModel.addTask({taskName: this.todoView.getTaskName(), taskDate: this.todoView.getTaskDate(), taskImportance: this.todoView.getTaskImportance(), taskNote: this.todoView.getTaskNote(), taskID: this.todoModel.getNewID(), isDone: false, isOverdue: false});
-        
-                
-            }
+
+                // check if a user has provided a task name and if a date is not past
+                if (this.todoView.getTaskName() && this.todoView.getTaskDate() >= this.getTodayDate()) {
+            
+                    // create a new task object
+                    const newTask = {
+                        taskName: this.todoView.getTaskName(),
+                        taskDate: this.todoView.getTaskDate(),
+                        taskImportance: this.todoView.getTaskImportance(),
+                        taskNote: this.todoView.getTaskNote(),
+                        taskID: this.todoModel.getNewID(), 
+                        isDone: false, 
+                        isOverdue: false,
+                        types: {
+                            today: false,
+                            thisWeek: false,
+                            thisMonth: false,
+                            important: false,
+                            archived: false,
+                            overdue: false
+                        }
+                    };
+
+                    // put the new task to the tasks array
+                    this.todoModel.addTask(newTask);
+                };
+            // if a user wants to edit a task
             } else {
+                // get from the form task's properties
                 const task = { name: this.todoView.getTaskName(), date: this.todoView.getTaskDate(), importance: this.todoView.getTaskImportance(), note: this.todoView.getTaskNote()  }
+                // update task
                 this.todoModel.updateTask(this.todoModel.displayedTaskID, task);
             }
 
@@ -154,8 +177,11 @@ class TodoController {
             this.todoModel.persistData();
             this.todoModel.persistCurrentID();
 
+            // check which tasks list is active (check which menu list item has a class "menu__item--active" in this particular moment)
+            const currentListType = Array.from(document.querySelectorAll('.menu__item'))[Array.from(document.querySelectorAll('.menu__item')).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id;
+
             // create an array with tasks depending on a category
-            const UI = this.getUIElements(Array.from(document.querySelectorAll('.menu__item'))[Array.from(document.querySelectorAll('.menu__item')).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
+            const UI = this.getUIElements(currentListType);
         
             // render UI
             this.todoView.renderUI(UI);
