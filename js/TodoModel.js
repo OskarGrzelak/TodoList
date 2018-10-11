@@ -17,17 +17,6 @@ class TodoModel {
         this.tasks[index].taskImportance = task.importance;
         this.tasks[index].taskNote = task.note;
     }
-    setTaskTypes(task, today) {
-        const dayOfWeek = new Date().getDay();
-        const dayOfMonth = new Date().getDate();
-        const month = new Date().getMonth() + 1;
-        const year = new Date().getFullYear();
-        if (task.taskDate === today) {
-            task.types.today = true;
-            task.types.week = true;
-            task.types.month = true;
-        } /* else if () */
-    }
     setIsMenuDisplayed(state) { this.isMenuDisplayed = state; }
     getIsMenuDisplayed() { return this.isMenuDisplayed; }
     toggleMenu() { this.isMenuDisplayed === true ? this.isMenuDisplayed = false : this.isMenuDisplayed = true; }
@@ -40,8 +29,125 @@ class TodoModel {
         if (storage) this.tasks = storage;
         if (id) this.currentFreeID = id;
     }
-    checkOverdue(id, date) {
-        const index = this.tasks.map(el => el.taskID).indexOf(id);
-        if(this.tasks[index].taskDate < date) this.tasks[index].isOverdue = true;
+
+    daysOfThisWeek() {
+        const dayOfWeek = new Date().getDay();
+        const dayOfMonth = new Date().getDate();
+        const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear();
+    
+        const daysOfThisWeek = [];
+        
+        let start, end;
+        if (dayOfWeek !== 0) {
+            start = dayOfMonth - dayOfWeek + 1;
+            end = dayOfMonth + (7 - dayOfWeek);
+        } else {
+            start = dayOfMonth - 6;
+            end = dayOfMonth;
+        };
+        
+        const daysInMonth = {
+            1: 31,
+            2: year%4 === 0 ? 29 : 28,
+            3: 31,
+            4: 30,
+            5: 31,
+            6: 30,
+            7: 31,
+            8: 31,
+            9: 30,
+            10: 31,
+            11: 30,
+            12: 31
+        };
+    
+        let tempYear, tempMonth, tempDay;
+        if (start < 1) {
+            if (month === 1) {
+                tempMonth = 12;
+                tempYear = year - 1;
+            } else {
+                tempMonth = month - 1;
+                tempYear = year;
+            }
+            if(tempMonth<10) { tempMonth = '0'+tempMonth }
+            for (let i = start; i <= 0; i++) {
+                tempDay = daysInMonth[tempMonth] + i;
+                if(tempDay<10) { tempDay = '0'+ tempDay }; 
+                daysOfThisWeek.push(`${tempYear}-${tempMonth}-${tempDay}`);
+            }
+            if(month<10) { month = '0'+ month }
+            for (let i = 1; i <= end; i ++) {
+                tempDay = i;
+                if(tempDay<10) { tempDay = '0'+ tempDay }; 
+                daysOfThisWeek.push(`${year}-${month}-${tempDay}`);
+            }
+        } else if (end > daysInMonth[month]) {
+            if (month === 12) {
+                tempMonth = 1;
+                tempYear = year + 1;
+            } else {
+                tempMonth = month + 1;
+                tempYear = year;
+            }
+            if(month<10) { month = '0'+ month }
+            for (let i = start; i <= daysInMonth[month]; i++) {
+                tempDay = i;
+                if(tempDay<10) { tempDay = '0'+ tempDay }; 
+                daysOfThisWeek.push(`${year}-${month}-${tempDay}`);
+            }
+            if(tempMonth<10) { tempMonth = '0'+tempMonth }
+            for (let i = 1; i <= end - daysInMonth[month]; i++) {
+                tempDay = i;
+                if(tempDay<10) { tempDay = '0'+ tempDay };
+                daysOfThisWeek.push(`${tempYear}-${tempMonth}-${tempDay}`);
+            }
+        } else {
+            for (let i = start; i <= end; i++) {
+                tempDay = i;
+                if(tempDay<10) { tempDay = '0'+ tempDay };
+                if(month<10) { month = '0'+ month };
+                daysOfThisWeek.push(`${year}-${month}-${tempDay}`);
+            }
+        }
+        return daysOfThisWeek;
+    };
+    
+    weekIncludesDate(week, date) {
+        return week.includes(date);
     }
+
+    monthIncludesDate(date) {
+        const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear();
+        return (month === parseInt(date.split('-')[1]) && year === parseInt(date.split('-')[0]));
+    }
+
+    isToday(todayDate, date) {
+        return todayDate === date;
+    }
+
+    isOverdue(todayDate, date) {
+        return todayDate > date;
+    }
+
+    checkDates() {
+        this.tasks.forEach(el => {
+            el.types.today = this.isToday(this.getTodayDate(), el.taskDate);
+            el.types.thisWeek = this.weekIncludesDate(this.daysOfThisWeek(), el.taskDate);
+            el.types.thisMonth = this.monthIncludesDate(el.taskDate);
+            el.types.overdue = this.isOverdue(this.getTodayDate(), el.taskDate);
+        });
+    }
+
+    getTodayDate() {
+        let today = new Date();
+        let day = today.getDate();
+        let month = today.getMonth()+1; //January is 0!
+        let year = today.getFullYear();
+        if(day<10) { day = '0'+day }; 
+        if(month<10) { month = '0'+month }
+        return `${year}-${month}-${day}`;
+    };
 }

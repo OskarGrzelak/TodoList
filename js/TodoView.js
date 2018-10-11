@@ -44,7 +44,7 @@ class TodoView {
     getTaskImportance() { return this.elements.taskImportance.checked; }
     getTaskNote() { return this.elements.taskNote.value; }
     renderTask(task) {
-        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><i class="material-icons delete">delete</i><span class="task">${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date ${task.isOverdue ? 'todo__date--overdue' : ''}">${task.taskDate}</span></span></li>`;
+        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><i class="material-icons delete">delete</i><span class="task">${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date ${task.types.overdue ? 'todo__date--overdue' : ''}">${task.taskDate}</span></span></li>`;
         this.elements.tasksList.insertAdjacentHTML('beforeend', markup);
     }
     renderTasksList(tasks) { tasks.forEach(el => this.renderTask(el)); }

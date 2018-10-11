@@ -28,23 +28,15 @@ class TodoController {
                 break;
             case 'today':
                 this.todoModel.tasks.forEach(el => {
-                    if (el.taskDate === this.getTodayDate()) {
+                    if (el.types.today) {
                         tempArr.push(el);
                     };
                 });
                 UI.header = 'tasks for today';
                 break;
             case 'this-week':
-                let start, end;
-                if (dayOfWeek !== 0) {
-                    start = dayOfMonth - dayOfWeek + 1;
-                    end = dayOfMonth + (7 - dayOfWeek);
-                } else {
-                    start = dayOfMonth - 6;
-                    end = dayOfMonth;
-                };
                 this.todoModel.tasks.forEach(el => {
-                    if (parseInt(el.taskDate.split('-')[1]) === month && parseInt(el.taskDate.split('-')[0]) === year && parseInt(el.taskDate.split('-')[2])>=start && parseInt(el.taskDate.split('-')[2])<=end) {
+                    if (el.types.thisWeek) {
                         tempArr.push(el);
                     };
                 });
@@ -52,7 +44,7 @@ class TodoController {
                 break;
             case 'this-month':
                 this.todoModel.tasks.forEach(el => {
-                    if (parseInt(el.taskDate.split('-')[1]) === month && parseInt(el.taskDate.split('-')[0]) === year) {
+                    if (el.types.thisMonth) {
                         tempArr.push(el);
                     };
                 });
@@ -68,7 +60,7 @@ class TodoController {
                 break;
             case 'overdue':
                 this.todoModel.tasks.forEach(el => {
-                    if (el.taskDate < this.getTodayDate()) {
+                    if (el.types.overdue) {
                         tempArr.push(el);
                     };
                 });
@@ -114,10 +106,9 @@ class TodoController {
                 Array.from(document.querySelectorAll('.menu__item')).forEach(el => el.classList.remove('menu__item--active'));
                 e.target.classList.add('menu__item--active');
 
-                // chceck overdue
-                this.todoModel.tasks.forEach(el => {
-                    this.todoModel.checkOverdue(el.taskID, this.getTodayDate());
-                });
+                // check dates
+                this.todoModel.checkDates();
+
                 this.todoModel.persistData();
                 this.todoModel.persistCurrentID();
         
@@ -153,14 +144,15 @@ class TodoController {
                         isDone: false, 
                         isOverdue: false,
                         types: {
-                            today: false,
-                            thisWeek: false,
-                            thisMonth: false,
-                            important: false,
+                            today: this.todoModel.isToday(this.getTodayDate(), this.todoView.getTaskDate()),
+                            thisWeek: this.todoModel.weekIncludesDate(this.todoModel.daysOfThisWeek(), this.todoView.getTaskDate()),
+                            thisMonth: this.todoModel.monthIncludesDate(this.todoView.getTaskDate()),
+                            important: this.todoView.getTaskImportance(),
                             archived: false,
                             overdue: false
                         }
                     };
+                    console.log(newTask);
 
                     // put the new task to the tasks array
                     this.todoModel.addTask(newTask);
@@ -172,6 +164,9 @@ class TodoController {
                 // update task
                 this.todoModel.updateTask(this.todoModel.displayedTaskID, task);
             }
+
+            // check dates
+            this.todoModel.checkDates();
 
             // persist data
             this.todoModel.persistData();
@@ -251,6 +246,10 @@ class TodoController {
         
         
             this.todoModel.readData();
+
+            // check dates
+            this.todoModel.checkDates();
+            
             // create an array with tasks depending on a category
             const UI = this.getUIElements(Array.from(document.querySelectorAll('.menu__item'))[Array.from(document.querySelectorAll('.menu__item')).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id);
             // render UI
