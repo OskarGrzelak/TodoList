@@ -48,8 +48,6 @@ class TodoView {
         this.elements.tasksList.insertAdjacentHTML('beforeend', markup);
     }
     renderTasksList(tasks) { tasks.forEach(el => this.renderTask(el)); }
-    renderTasksHeader(header) { this.elements.tasksHeader.innerHTML = header; }
-    renderTasksMessage(message) { this.elements.tasksMessage.innerHTML = message; }
     clearTasksList() { this.elements.tasksList.innerHTML = ''; }
     clearInputs() {
         this.elements.taskName.value = '';
@@ -59,16 +57,43 @@ class TodoView {
         this.elements.addTask.textContent = 'Add task';
         this.elements.chceckboxForm.children[0].classList.remove('check--show');
     }
-    renderUI(UI) {
-        // render headers
-        this.renderTasksHeader(UI.header);
-        this.renderTasksMessage(UI.message);
 
-        // clear todo section
-        this.clearTasksList();
+    renderHeaders(tasks, listType) {
+        let header, message;
+        switch (listType) {
+            case 'all':
+                header = 'tasks';
+                break;
+            case 'today':
+                header = 'tasks for today';
+                break;
+            case 'week':
+                header = 'tasks for this week';
+                break;
+            case 'month':
+                header = 'tasks for this month';
+                break;
+            case 'important':
+                header = 'important tasks';
+                break;
+            case 'overdue':
+                header = 'overdue tasks';
+                break;
+            case 'archived':
+                header = 'archived tasks';
+        }
+        
+        const tasksCounter = tasks.length;
+        if (tasksCounter === 0) {
+            message = '<h3 class="heading-tertiary">You don\'t have any tasks</h3>';  
+        } else if (tasksCounter === 1) {
+            message = `<h3 class="heading-tertiary">You have 1 ${header}</h3>`;
+        } else {
+            message = `<h3 class="heading-tertiary">You have ${tasksCounter} ${header}</h3>`;
+        };
 
-        // render todo section
-        this.renderTasksList(UI.currentTasksList);
+        this.elements.tasksHeader.innerHTML = header;
+        this.elements.tasksMessage.innerHTML = message;
     }
     showTask(task) {
         this.elements.taskName.value = task.taskName;

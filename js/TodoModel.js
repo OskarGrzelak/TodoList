@@ -16,6 +16,7 @@ class TodoModel {
         this.tasks[index].taskDate = task.date;
         this.tasks[index].taskImportance = task.importance;
         this.tasks[index].taskNote = task.note;
+        this.tasks[index].types.important = task.importance;
     }
     setIsMenuDisplayed(state) { this.isMenuDisplayed = state; }
     getIsMenuDisplayed() { return this.isMenuDisplayed; }
@@ -135,8 +136,8 @@ class TodoModel {
     checkDates() {
         this.tasks.forEach(el => {
             el.types.today = this.isToday(this.getTodayDate(), el.taskDate);
-            el.types.thisWeek = this.weekIncludesDate(this.daysOfThisWeek(), el.taskDate);
-            el.types.thisMonth = this.monthIncludesDate(el.taskDate);
+            el.types.week = this.weekIncludesDate(this.daysOfThisWeek(), el.taskDate);
+            el.types.month = this.monthIncludesDate(el.taskDate);
             el.types.overdue = this.isOverdue(this.getTodayDate(), el.taskDate);
         });
     }
@@ -149,5 +150,15 @@ class TodoModel {
         if(day<10) { day = '0'+day }; 
         if(month<10) { month = '0'+month }
         return `${year}-${month}-${day}`;
+    };
+
+    createCurrentTasksList(tasks, listType) {
+        return tasks.filter(el => { 
+            if (listType === 'archived') { 
+                if (el.types[listType]) return el;
+            } else {
+                if  (el.types[listType] && !el.types['archived']) return el;
+            }
+        });
     };
 }
