@@ -14,9 +14,17 @@ class TodoModel {
         const index = this.tasks.map(el => el.taskID).indexOf(id);
         this.tasks[index].taskName = task.name;
         this.tasks[index].taskDate = task.date;
-        this.tasks[index].taskImportance = task.importance;
         this.tasks[index].taskNote = task.note;
         this.tasks[index].types.important = task.importance;
+    }
+    createCurrentTasksList(tasks, listType) {
+        return tasks.filter(el => { 
+            if (listType === 'archived') { 
+                if (el.types[listType]) return el;
+            } else {
+                if  (el.types[listType] && !el.types['archived']) return el;
+            }
+        });
     }
     setIsMenuDisplayed(state) { this.isMenuDisplayed = state; }
     getIsMenuDisplayed() { return this.isMenuDisplayed; }
@@ -30,6 +38,18 @@ class TodoModel {
         if (storage) this.tasks = storage;
         if (id) this.currentFreeID = id;
     }
+
+    // Dates handling
+
+    getTodayDate() {
+        let today = new Date();
+        let day = today.getDate();
+        let month = today.getMonth()+1; //January is 0!
+        let year = today.getFullYear();
+        if(day<10) { day = '0'+day }; 
+        if(month<10) { month = '0'+month }
+        return `${year}-${month}-${day}`;
+    };
 
     daysOfThisWeek() {
         const dayOfWeek = new Date().getDay();
@@ -141,24 +161,4 @@ class TodoModel {
             el.types.overdue = this.isOverdue(this.getTodayDate(), el.taskDate);
         });
     }
-
-    getTodayDate() {
-        let today = new Date();
-        let day = today.getDate();
-        let month = today.getMonth()+1; //January is 0!
-        let year = today.getFullYear();
-        if(day<10) { day = '0'+day }; 
-        if(month<10) { month = '0'+month }
-        return `${year}-${month}-${day}`;
-    };
-
-    createCurrentTasksList(tasks, listType) {
-        return tasks.filter(el => { 
-            if (listType === 'archived') { 
-                if (el.types[listType]) return el;
-            } else {
-                if  (el.types[listType] && !el.types['archived']) return el;
-            }
-        });
-    };
 }

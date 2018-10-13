@@ -22,14 +22,8 @@ class TodoController {
                 // create an array with tasks depending on a category
                 const currentTasksList = this.todoModel.createCurrentTasksList(this.todoModel.tasks, e.target.id);
 
-                // clear tasks list
-                this.todoView.clearTasksList();
-
-                // render headings
-                this.todoView.renderHeaders(currentTasksList, e.target.id);
-
-                // render task list
-                this.todoView.renderTasksList(currentTasksList);
+                // clear and render UI
+                this.todoView.renderUI(currentTasksList, e.target.id);
 
                 // persist data
                 this.todoModel.persistData();
@@ -55,11 +49,8 @@ class TodoController {
                     const newTask = {
                         taskName: this.todoView.getTaskName(),
                         taskDate: this.todoView.getTaskDate(),
-                        taskImportance: this.todoView.getTaskImportance(),
                         taskNote: this.todoView.getTaskNote(),
                         taskID: this.todoModel.getNewID(), 
-                        isDone: false, 
-                        isOverdue: false,
                         types: {
                             all: true,
                             today: this.todoModel.isToday(this.todoModel.getTodayDate(), this.todoView.getTaskDate()),
@@ -91,14 +82,8 @@ class TodoController {
             // create an array with tasks depending on a category
             const currentTasksList = this.todoModel.createCurrentTasksList(this.todoModel.tasks, currentListType);
             
-            // clear tasks list
-            this.todoView.clearTasksList();
-
-            // render headings
-            this.todoView.renderHeaders(currentTasksList, currentListType);
-
-            // render task list
-            this.todoView.renderTasksList(currentTasksList);
+            // clear and render UI
+            this.todoView.renderUI(currentTasksList, currentListType);
 
             // persist data
             this.todoModel.persistData();
@@ -126,53 +111,26 @@ class TodoController {
             if (checkbox) {
                 if (!checkbox.children[0].classList.contains('check--show')) {
                     checkbox.children[0].classList.add('check--show');
-                    this.todoModel.tasks[this.todoModel.tasks.map(el => el.taskID).indexOf(parseInt(e.target.parentElement.id))].isDone = true;
                     this.todoModel.tasks[this.todoModel.tasks.map(el => el.taskID).indexOf(parseInt(e.target.parentElement.id))].types.archived = true;
-                    setTimeout(() => {
-                        // check which tasks list is active (check which menu list item has a class "menu__item--active" in this particular moment)
-                        const currentListType = Array.from(document.querySelectorAll('.menu__item'))[Array.from(document.querySelectorAll('.menu__item')).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id;
-                        
-                        // check dates
-                        this.todoModel.checkDates();
-
-                        // create an array with tasks depending on a category
-                        const currentTasksList = this.todoModel.createCurrentTasksList(this.todoModel.tasks, currentListType);
-                        
-                        // clear tasks list
-                        this.todoView.clearTasksList();
-
-                        // render headings
-                        this.todoView.renderHeaders(currentTasksList, currentListType);
-
-                        // render task list
-                        this.todoView.renderTasksList(currentTasksList);
-                    }, 500);
-                    this.todoModel.persistData();
                 } else {
                     checkbox.children[0].classList.remove('check--show');
-                    this.todoModel.tasks[this.todoModel.tasks.map(el => el.taskID).indexOf(parseInt(e.target.parentElement.parentElement.id))].isDone = false;
                     this.todoModel.tasks[this.todoModel.tasks.map(el => el.taskID).indexOf(parseInt(e.target.parentElement.parentElement.id))].types.archived = false;
-                    setTimeout(() => {
-                        // check which tasks list is active (check which menu list item has a class "menu__item--active" in this particular moment)
-                        const currentListType = Array.from(document.querySelectorAll('.menu__item'))[Array.from(document.querySelectorAll('.menu__item')).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id;
-
-                        // check dates
-                        this.todoModel.checkDates();
-
-                        // create an array with tasks depending on a category
-                        const currentTasksList = this.todoModel.createCurrentTasksList(this.todoModel.tasks, currentListType);
-                        
-                        // clear tasks list
-                        this.todoView.clearTasksList();
-
-                        // render headings
-                        this.todoView.renderHeaders(currentTasksList, currentListType);
-
-                        // render task list
-                        this.todoView.renderTasksList(currentTasksList);
-                    }, 500);
-                    this.todoModel.persistData();
                 }
+
+                setTimeout(() => {
+                    // check which tasks list is active (check which menu list item has a class "menu__item--active" in this particular moment)
+                    const currentListType = Array.from(document.querySelectorAll('.menu__item'))[Array.from(document.querySelectorAll('.menu__item')).map(el => el.classList.contains('menu__item--active')).indexOf(true)].id;
+
+                    // check dates
+                    this.todoModel.checkDates();
+
+                    // create an array with tasks depending on a category
+                    const currentTasksList = this.todoModel.createCurrentTasksList(this.todoModel.tasks, currentListType);
+                    
+                    // clear and render UI
+                    this.todoView.renderUI(currentTasksList, currentListType);
+                }, 500);
+                this.todoModel.persistData();
                 
             };
         });
@@ -196,22 +154,15 @@ class TodoController {
                     // create an array with tasks depending on a category
                     const currentTasksList = this.todoModel.createCurrentTasksList(this.todoModel.tasks, currentListType);
                         
-                    // clear tasks list
-                    this.todoView.clearTasksList();
-
-                    // render headings
-                    this.todoView.renderHeaders(currentTasksList, currentListType);
-
-                    // render task list
-                    this.todoView.renderTasksList(currentTasksList);
+                    // clear and render UI
+                    this.todoView.renderUI(currentTasksList, currentListType);
                 }, 500);
                 this.todoModel.persistData();    
             }
         });
 
         window.addEventListener('load', () => {
-        
-        
+            // read data from local storage
             this.todoModel.readData();
 
             // check which tasks list is active (check which menu list item has a class "menu__item--active" in this particular moment)
@@ -222,15 +173,9 @@ class TodoController {
 
             // create an array with tasks depending on a category
             const currentTasksList = this.todoModel.createCurrentTasksList(this.todoModel.tasks, currentListType);
-            
-            // clear tasks list
-            this.todoView.clearTasksList();
 
-            // render headings
-            this.todoView.renderHeaders(currentTasksList, currentListType);
-
-            // render task list
-            this.todoView.renderTasksList(currentTasksList);
+            // clear and render UI
+            this.todoView.renderUI(currentTasksList, currentListType);
         });
     }
 }

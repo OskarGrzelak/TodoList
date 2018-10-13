@@ -44,7 +44,7 @@ class TodoView {
     getTaskImportance() { return this.elements.taskImportance.checked; }
     getTaskNote() { return this.elements.taskNote.value; }
     renderTask(task) {
-        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.isDone ? "check--show" : ""}">&check;</span></span><i class="material-icons delete">delete</i><span class="task">${task.taskName}${task.taskImportance ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date ${task.types.overdue ? 'todo__date--overdue' : ''}">${task.taskDate}</span></span></li>`;
+        const markup = `<li class="todo__task" id="${task.taskID}"><span class="checkbox"><span class="check ${task.types.archived ? "check--show" : ""}">&check;</span></span><i class="material-icons delete">delete</i><span class="task">${task.taskName}${task.types.important ? '<span class="todo__importance">!!!</span>' : ''}<span class="todo__date ${task.types.overdue ? 'todo__date--overdue' : ''}">${task.taskDate}</span></span></li>`;
         this.elements.tasksList.insertAdjacentHTML('beforeend', markup);
     }
     renderTasksList(tasks) { tasks.forEach(el => this.renderTask(el)); }
@@ -60,6 +60,7 @@ class TodoView {
 
     renderHeaders(tasks, listType) {
         let header, message;
+        const tasksCounter = tasks.length;
         switch (listType) {
             case 'all':
                 header = 'tasks';
@@ -82,8 +83,7 @@ class TodoView {
             case 'archived':
                 header = 'archived tasks';
         }
-        
-        const tasksCounter = tasks.length;
+
         if (tasksCounter === 0) {
             message = '<h3 class="heading-tertiary">You don\'t have any tasks</h3>';  
         } else if (tasksCounter === 1) {
@@ -94,6 +94,16 @@ class TodoView {
 
         this.elements.tasksHeader.innerHTML = header;
         this.elements.tasksMessage.innerHTML = message;
+    }
+    renderUI(tasksList, listType) {
+        // clear tasks list
+        this.clearTasksList();
+
+        // render headings
+        this.renderHeaders(tasksList, listType);
+
+        // render task list
+        this.renderTasksList(tasksList);
     }
     showTask(task) {
         this.elements.taskName.value = task.taskName;
